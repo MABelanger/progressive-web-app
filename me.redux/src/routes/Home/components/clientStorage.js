@@ -9,10 +9,8 @@ const carInstance = localforage.createInstance({
 
 function addCars(newCars){
   return new Promise((resolve, reject)=>{
-
     newCars.forEach((newCar)=>{
       newCar.key = newCar.key.toString()
-
       carInstance.setItem(newCar.key, newCar.value)
       .then(()=>{
         resolve();

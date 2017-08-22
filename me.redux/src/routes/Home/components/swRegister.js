@@ -18,7 +18,28 @@ if('serviceWorker' in navigator) {
           console.log('SW statechange: ');
       })
     }
+
+    // Every time a updated service worker is found
+    // but not nececerrary in control so we add
+    swRegistration.addEventListener('updatefound',(e)=>{
+      console.log('New service Worker found!', swRegistration)
+      swRegistration.installing.addEventListener('statechange', (e)=>{
+        console.log('New service worker state: ', e.target.state);
+      });
+    });
+
+    // Check update every 5 seconds
+    setInterval(()=>{
+      swRegistration.update();
+    }, 5000);
+
   }).catch((error)=>{
     console.log( error);
   })
+
+  // When the serviceWorker of this page change
+  // throught `self.skipWaiting()` And `self.client.claim()`
+  navigator.serviceWorker.addEventListener('controllerchange', (e)=>{
+    console.log('Controller change!!');
+  });
 }
