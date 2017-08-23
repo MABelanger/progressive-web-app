@@ -42,4 +42,16 @@ if('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('controllerchange', (e)=>{
     console.log('Controller change!!');
   });
+
+  // Listen for message from sw
+  navigator.serviceWorker.addEventListener('message', (event)=>{
+    let clientId = event.data.clientId;
+    let message = event.data.message;
+    console.log('From Client: ', clientId, message);
+  })
+
+  if(navigator.serviceWorker.controller != null){
+    navigator.serviceWorker.controller.postMessage('message from client');
+  }
+
 }

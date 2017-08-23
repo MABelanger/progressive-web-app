@@ -77,6 +77,12 @@ self.addEventListener('fetch', (event)=>{
   }
 })
 
+self.addEventListener('message',(event)=>{
+  console.log('From SW message Received: ', event.data)
+  // resend to client
+  event.source.postMessage({clientId: event.source.id, message:'message from sw'});
+});
+
 /**
   Cache first strategy
 */
@@ -135,8 +141,3 @@ function networkFirstStrategy(request){
     return caches.match(request);
   })
 }
-
-
-/**
- The offline
- */
